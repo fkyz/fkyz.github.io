@@ -15,9 +15,9 @@
             window.GLOBAL_CONFIG.SCF_GATEWAY += '/fodi/';
             window.GLOBAL_CONFIG.IS_CF = false;
         }
-        // if (location.protocol === 'http:') {
-        //     location.href = location.href.replace(/http/, 'https');
-        // }
+         //if (location.protocol === 'http:') {
+         //    location.href = location.href.replace(/http/, 'https');
+         //}
     </script>
     <meta charset="utf-8">
     <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no" name="viewport">
@@ -736,7 +736,7 @@
                     return;
                 }
                 input.value = '';
-                input.placeholder = '正在验证..';
+                input.placeholder = '正在验证……';
                 sendRequest(window.api.method,
                     window.api.url,
                     window.api.formatPayload(files.parent, passwd),
@@ -897,22 +897,6 @@
                             content.innerHTML = '';
                             content.append(fancy);
                             break;
-                        case 'audio':
-                            let audio = new Audio();
-                            audio.style.outline = 'none';
-                            audio.preload = 'auto';
-                            audio.controls = 'controls';
-                            audio.style.width = '100%';
-                            audio.src = url;
-                            content.innerHTML = '';
-                            content.append(audio);
-                            break;
-                        case 'video':
-                            let video = document.createElement('div');
-                            previewHandler.createDplayer(url, suffix, video);
-                            content.innerHTML = '';
-                            content.append(video);
-                            break;
                         case 'text':
                             let pre = document.createElement('pre');
                             let code = document.createElement('code');
@@ -960,34 +944,7 @@
                     }
                     document.querySelector('.file-name').innerHTML = path;
                     document.querySelector('.btn.download').addEventListener('click',
-                        () => location.href = url
-                    );
-                    document.querySelector('.btn.quote').addEventListener('click',
-                        event => {
-                            previewHandler.copyTextContent(null, window.api.url + '?file=' + path);
-                            const btn = document.querySelector('.btn.quote');
-                            btn.innerHTML = '已复制';
-                            setTimeout(() => btn.innerHTML = '引用', 250);
-                        }
-                    );
-                    document.querySelector('.btn.share').addEventListener('click',
-                        event => {
-                            const sharePath = () => {
-                                let arr = window.backFordwardCache.current.split('/');
-                                let r = '';
-                                for (let i = 1; i < arr.length; i++) {
-                                    r += '/' + arr[i];
-                                }
-                                return r;
-                            }
-                            previewHandler.copyTextContent(null,
-                                window.location.origin +
-                                window.location.pathname +
-                                '?path=' + sharePath());
-                            const btn = document.querySelector('.btn.share');
-                            btn.innerHTML = '已复制';
-                            setTimeout(() => btn.innerHTML = '分享', 250);
-                        }
+                        () => window.open(url)
                     );
                     switchRightDisplay('preview');
 
@@ -1257,7 +1214,7 @@
     </script>
 </head>
 
-<body hidden="hidden">
+<body>
     <template id="tree-node-wrapper-template">
         <div class="tree-node-wrapper">
             <div class="tree-node">
@@ -1319,8 +1276,6 @@
                     <div class="info">
                         <div class="file-name"></div>
                         <div class="btn download">下载</div>
-                        <div class="btn quote">引用</div>
-                        <div class="btn share">分享</div>
                     </div>
                     <div class="content"></div>
                 </div>
